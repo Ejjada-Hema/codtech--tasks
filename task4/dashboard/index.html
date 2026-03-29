@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Productivity Dashboard</title>
+</head>
+
+<body>
+
+<h2>Weekly Productivity Report</h2>
+
+<div id="report"></div>
+
+<script>
+
+fetch("http://localhost:3000/today")
+.then(res=>res.json())
+.then(data=>{
+
+let productive = ["github.com","leetcode.com","stackoverflow.com"]
+
+let productiveTime = 0
+let unproductiveTime = 0
+
+data.forEach(site=>{
+
+if(productive.includes(site.site)){
+productiveTime += site.time
+}
+else{
+unproductiveTime += site.time
+}
+
+})
+
+document.getElementById("report").innerHTML = `
+<p>Productive Time: ${Math.round(productiveTime/3600000)} hrs</p>
+<p>Unproductive Time: ${Math.round(unproductiveTime/3600000)} hrs</p>
+`
+
+})
+
+</script>
+
+</body>
+</html>
